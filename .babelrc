@@ -1,0 +1,13 @@
+{
+  "presets": [
+    {
+      "plugins": [
+        "syntax-class-properties",
+        "transform-class-properties"
+      ]
+    },
+    "react",
+    "es2015",
+    "stage-0"
+  ]
+}
