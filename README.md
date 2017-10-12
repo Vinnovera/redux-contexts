@@ -3,12 +3,12 @@
 ![NPM Version](https://img.shields.io/npm/v/redux-contexts.svg?style=flat-square)
 
 `redux-contexts` is a utility for adding redux reducers with separated states during runtime.
-The library is forked from [redux-injector](https://github.com/randallknutson/redux-injector) by [@randallknutsson](https://github.com/randallknutsson) and is built upon on [multireducer](https://github.com/erikras/multireducer) by [@erikras](https://github.com/erikras)
+The library is forked from [redux-injector](https://github.com/randallknutson/redux-injector) by [@randallknutsson](https://github.com/randallknutsson) and is built upon on [multireducer](https://github.com/erikras/multireducer) by [@erikras](https://github.com/erikras)
 
 ## Installation
 
 ```
-npm install --save multireducer
+npm install --save redux-contexts
 ```
 
 ## Why?
