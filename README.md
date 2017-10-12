@@ -8,7 +8,7 @@ The library is forked from [redux-injector](https://github.com/randallknutson
 ## Installation
 
 ```
-npm install --save multireducer
+npm install --save redux-contexts
 ```
 
 ## Why?
