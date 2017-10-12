@@ -17,7 +17,7 @@ When you find yourself wanting to have multiple instances of the same component 
 
 ## Usage
 Start by creating the redux store with the `createInjectStore` redux middleware
-```JSX
+```javascript
 import { createInjectStore } from 'redux-contexts';
 
 let store = createInjectStore(
