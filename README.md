@@ -4,7 +4,7 @@
 [![Build status](https://img.shields.io/travis/Vinnovera/redux-contexts/master.svg?style=flat-square)](https://travis-ci.org/Vinnovera/redux-contexts)
 
 `redux-contexts` is a utility for adding redux reducers with separated states during runtime.
-The library is forked from [redux-injector](https://github.com/randallknutson/redux-injector) by [@randallknutsson](https://github.com/randallknutsson) and is built upon on [multireducer](https://github.com/erikras/multireducer) by [@erikras](https://github.com/erikras)
+The library is forked from [redux-injector](https://github.com/randallknutson/redux-injector) by [@randallknutsson](https://github.com/randallknutson) and is built upon on [multireducer](https://github.com/erikras/multireducer) by [@erikras](https://github.com/erikras)
 
 ## Installation
 
