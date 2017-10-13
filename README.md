@@ -12,8 +12,8 @@ npm install --save redux-contexts
 ```
 
 ## Why?
-This is a set of functions and higher order components (decorators) that lets you reuse your components And reducers in an isolated way.
-When you find yourself wanting to have multiple instances of the same component and reducer, but with separated states and actions dispatches - this is what you need!
+This is a set of functions and higher order components (decorators) that lets you reuse your components *and* reducers in an isolated way.
+When you find yourself wanting to have multiple instances of the same component and reducer, but with separated states and actions dispatches - **this is what you need!**
 
 ## Usage
 Start by creating the redux store with the `createInjectStore` redux middleware
@@ -50,7 +50,6 @@ Finally connect the component with `contextConnect` in the same way as react-red
 ```javascript
 import React from 'react';
 import { contextConnect } from 'redux-contexts';
-import OtherComponent from 'OtherComponent';
 import someAction from 'someAction';
 
 const mapStateToProps = state => ({
@@ -58,7 +57,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  someAction: () => dispatch(someAction()),
+  someAction: () => dispatch(someAction())
 });
 
 @contextConnect(mapStateToProps, mapDispatchToProps);
