@@ -26,7 +26,7 @@ describe('reduxInjector', () => {
     });
   });
 
-  it('should create inject reducer with injectReducer', () => {
+  it('should inject reducer with injectReducer', () => {
     injectReducer('foo', reducer);
     expect(store.getState()).toEqual({
       test: {},
