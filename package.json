@@ -8,7 +8,8 @@
     "url": "https://github.com/Vinnovera/redux-contexts.git"
   },
   "scripts": {
-    "test": "jest",
+    "test": "jest --coverage",
+    "coveralls": "cat ./coverage/lcov.info | coveralls",
     "build": "babel src --out-dir lib",
     "clean": "rimraf lib",
     "prepublish": "npm run test && npm run clean && npm run build"
@@ -49,6 +50,7 @@
     "babel-preset-env": "^1.6.0",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
+    "coveralls": "^3.0.0",
     "jest": "^21.2.1",
     "react": "^16.0.0",
     "react-redux": "^5.0.6",
