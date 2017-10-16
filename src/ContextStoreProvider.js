@@ -11,6 +11,23 @@ import isEmpty from 'lodash/isEmpty';
 import key from './key';
 
 export default class ContextStoreProvider extends Component {
+  static propTypes = {
+    name: PropTypes.string,
+    reducers: PropTypes.objectOf(
+      PropTypes.oneOfType([
+        PropTypes.object,
+        PropTypes.func
+      ])
+    ),
+    removeOnUnmount: PropTypes.bool
+  };
+
+  static defaultProps = {
+    name: null,
+    reducers: {},
+    removeOnUnmount: false
+  };
+
   static childContextTypes = {
     contextName: PropTypes.string
   };
@@ -43,7 +60,7 @@ export default class ContextStoreProvider extends Component {
   }
 
   componentWillUnmount() {
-    if (isEmpty(this.reducers)) {
+    if (!this.props.removeOnUnmount || isEmpty(this.reducers)) {
       return;
     }
     removeReducer(`${ key }.${ this.contextName }`);
