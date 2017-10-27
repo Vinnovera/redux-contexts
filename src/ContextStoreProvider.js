@@ -46,17 +46,15 @@ export default class ContextStoreProvider extends Component {
   }
 
   componentWillMount() {
-    if (isEmpty(this.reducers)) {
-      console.log('reducers is empty', this.props);
-      return;
+    if (!isEmpty(this.reducers)) {
+      injectReducer(
+        `${ key }.${ this.contextName }`,
+        multireducer(
+          combineReducers(this.reducers),
+          this.contextName
+        )
+      );
     }
-    injectReducer(
-      `${ key }.${ this.contextName }`,
-      multireducer(
-        combineReducers(this.reducers),
-        this.contextName
-      )
-    );
   }
 
   componentWillUnmount() {
