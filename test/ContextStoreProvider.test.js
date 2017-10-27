@@ -1,0 +1,146 @@
+import React from 'react';
+import { applyMiddleware } from 'redux';
+import thunkMiddleware from 'redux-thunk';
+import { shallow, } from 'enzyme';
+
+import ContextStoreProvider from '../src/ContextStoreProvider';
+import { createInjectStore } from '../src/reduxInjector';
+import key from '../src/key';
+
+const reducer = (state = {}, { payload }) => ({
+  ...state,
+  ...payload
+});
+
+describe('ContextStoreProvider', () => {
+  let store;
+
+  beforeEach(() => {
+    store = applyMiddleware(thunkMiddleware)(createInjectStore)(
+      {
+        [key]: {
+          test: reducer,
+          test2: reducer
+        }
+      },
+      {
+        [key]: {
+          test: {
+            foo: 'bar'
+          },
+          test2: {
+            bar: 'baz'
+          }
+        }
+      }
+    );
+  });
+
+  it('should render its children', () => {
+    expect(shallow(
+      <ContextStoreProvider>
+        <div>test</div>
+      </ContextStoreProvider>
+    ).contains(
+      <div>test</div>)
+    ).toBe(true)
+  });
+
+  it('should inject reducers into store', () => {
+    shallow(
+      <ContextStoreProvider
+        name="test"
+        reducers={ { reducer }}
+      />
+    );
+
+    expect(store.getState()).toHaveProperty(key);
+    expect(store.getState()).toEqual({
+      [key]: {
+        test: {
+          foo: 'bar'
+        },
+        test2: {
+          bar: 'baz'
+        }
+      }
+    })
+  });
+
+  it('should generate a unique context name with uuid when no name is specified', () => {
+    shallow(
+      <ContextStoreProvider
+        reducers={ { reducer }}
+      />
+    );
+
+    expect(store.getState()).toHaveProperty(key);
+    expect(Object.keys(store.getState()[key])[2]).toMatch(/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/)
+  });
+
+  it('should not remove reducers on unmount', () => {
+    const wrapper = shallow(
+      <ContextStoreProvider
+        name="test"
+        reducers={ { reducer }}
+      />
+    );
+
+    expect(store.getState()).toHaveProperty(key);
+    expect(store.getState()).toEqual({
+      [key]: {
+        test: {
+          foo: 'bar'
+        },
+        test2: {
+          bar: 'baz'
+        }
+      }
+    });
+
+    wrapper.unmount();
+
+    expect(store.getState()).toEqual({
+      [key]: {
+        test: {
+          foo: 'bar'
+        },
+        test2: {
+          bar: 'baz'
+        }
+      }
+    });
+  });
+
+  it('should remove reducers on unmount when removeOnUnmount=true', () => {
+    const wrapper = shallow(
+      <ContextStoreProvider
+        name="test"
+        reducers={ { reducer }}
+        removeOnUnmount
+      />
+    );
+
+    expect(store.getState()).toHaveProperty(key);
+    expect(store.getState()).toEqual({
+      [key]: {
+        test: {
+          foo: 'bar'
+        },
+        test2: {
+          bar: 'baz'
+        }
+      }
+    });
+
+    wrapper.unmount();
+
+    expect(store.getState()).toEqual({
+      [key]: {
+        test2: {
+          bar: 'baz'
+        }
+      }
+    });
+  });
+});
