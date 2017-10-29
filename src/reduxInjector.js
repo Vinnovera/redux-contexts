@@ -26,7 +26,7 @@ const combineReducersRecurse = reducers => {
   });
 };
 
-export const createInjectStore = (initialReducers = {}, ...args) => {
+export const createInjectStore = (initialReducers, ...args) => {
   store = createStore(
     combineReducersRecurse(initialReducers),
     ...args
