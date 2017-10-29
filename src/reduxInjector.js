@@ -26,19 +26,9 @@ const combineReducersRecurse = reducers => {
   });
 };
 
-export const createInjectStore = (initialReducers = {}, initialState = {}, ...args) => {
-  // If last item is an object, it is overrides.
-  if (typeof args[args.length - 1] === 'object') {
-    const overrides = args.pop();
-    // Allow overriding the combineReducers function such as with redux-immutable.
-    if (overrides.hasOwnProperty('combineReducers') && typeof overrides.combineReducers === 'function') {
-      combine = overrides.combineReducers;
-    }
-  }
-
+export const createInjectStore = (initialReducers = {}, ...args) => {
   store = createStore(
     combineReducersRecurse(initialReducers),
-    initialState,
     ...args
   );
 
@@ -56,7 +46,7 @@ export const injectReducer = (key, reducer, force = false) => {
 };
 
 export const removeReducer = key => {
-  // If already set, do nothing.
+  // If not set, do nothing
   if (!has(store.injectedReducers, key)) return;
   //Remove key from state (hot reload warning if not)
   const state = store.getState();
