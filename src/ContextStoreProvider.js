@@ -23,7 +23,7 @@ export default class ContextStoreProvider extends Component {
   };
 
   static defaultProps = {
-    name: null,
+    name: uuid(),
     reducers: {},
     removeOnUnmount: false
   };
@@ -32,36 +32,29 @@ export default class ContextStoreProvider extends Component {
     contextName: PropTypes.string
   };
 
-  constructor(props) {
-    super(props);
-
-    this.contextName = props.name || uuid();
-    this.reducers = props.reducers || {};
-  }
-
   getChildContext() {
     return {
-      contextName: this.contextName
+      contextName: this.props.name
     };
   }
 
   componentWillMount() {
-    if (!isEmpty(this.reducers)) {
+    if (!isEmpty(this.props.reducers)) {
       injectReducer(
-        `${ key }.${ this.contextName }`,
+        `${ key }.${ this.props.name }`,
         multireducer(
-          combineReducers(this.reducers),
-          this.contextName
+          combineReducers(this.props.reducers),
+          this.props.name
         )
       );
     }
   }
 
   componentWillUnmount() {
-    if (!this.props.removeOnUnmount || isEmpty(this.reducers)) {
+    if (!this.props.removeOnUnmount || isEmpty(this.props.reducers)) {
       return;
     }
-    removeReducer(`${ key }.${ this.contextName }`);
+    removeReducer(`${ key }.${ this.props.name }`);
   }
 
   render() {
