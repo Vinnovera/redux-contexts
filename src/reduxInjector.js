@@ -26,7 +26,7 @@ const combineReducersRecurse = reducers => {
   });
 };
 
-export const createInjectStore = (initialReducers = {}, ...args) => {
+export const createInjectStore = (initialReducers = {}, initialState = {}, ...args) => {
   // If last item is an object, it is overrides.
   if (typeof args[args.length - 1] === 'object') {
     const overrides = args.pop();
@@ -38,6 +38,7 @@ export const createInjectStore = (initialReducers = {}, ...args) => {
 
   store = createStore(
     combineReducersRecurse(initialReducers),
+    initialState,
     ...args
   );
 
