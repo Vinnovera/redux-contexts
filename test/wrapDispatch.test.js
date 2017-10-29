@@ -87,4 +87,9 @@ describe('wrapDispatch', () => {
 
     wrappedDispatch(thunkAction())
   });
+
+  it('should throw when trying to dispatch something other than functions or objects', () => {
+    const wrappedDispatch = wrapDispatch(store.dispatch, 'test');
+    expect(() => { wrappedDispatch(true) }).toThrow()
+  });
 });

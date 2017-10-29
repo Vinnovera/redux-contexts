@@ -71,26 +71,30 @@ describe('ContextStoreProvider', () => {
   });
 
   it('should generate a unique context name with uuid when no name is specified', () => {
-    shallow(
+    const wrapper = shallow(
       <ContextStoreProvider
         reducers={ { reducer }}
       />
     );
 
-    expect(store.getState()).toHaveProperty(key);
+    expect(wrapper.instance().props.name)
+      //UUID
+      .toMatch(/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/);
+
     expect(Object.keys(store.getState()[key])[1])
-    // UUID
-      .toMatch(/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/)
+      //UUID
+      .toMatch(/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/);
   });
 
   it('should be able to provide an existing context', () => {
-    shallow(
+    const wrapper = shallow(
       <ContextStoreProvider
         name="test2"
       />
     );
 
-    expect(store.getState()).toHaveProperty(key);
+    expect(wrapper.instance().props.reducers).toEqual({});
+
     expect(store.getState()).toEqual({
       [key]: {
         test2: {

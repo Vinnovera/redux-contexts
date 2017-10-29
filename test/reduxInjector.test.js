@@ -48,6 +48,11 @@ describe('reduxInjector', () => {
     });
   });
 
+
+  it('should not do anyting if no reducer is found', () => {
+    expect(() => removeReducer('foo')).not.toThrow();
+  });
+
   it('should return a store that responds to actions', () => {
     injectReducer('foo', reducer);
     store.dispatch({
@@ -65,5 +70,9 @@ describe('reduxInjector', () => {
         bar: 'baz'
       }
     });
+  });
+
+  it('should throw if no reducers are specified', () => {
+    expect(() => createInjectStore()).toThrow()
   });
 });
