@@ -1,7 +1,5 @@
 import React from 'react';
-import { applyMiddleware } from 'redux';
-import thunkMiddleware from 'redux-thunk';
-import { shallow, } from 'enzyme';
+import { shallow } from 'enzyme';
 
 import ContextStoreProvider from '../src/ContextStoreProvider';
 import { createInjectStore } from '../src/reduxInjector';
@@ -16,20 +14,20 @@ describe('ContextStoreProvider', () => {
   let store;
 
   beforeEach(() => {
-    store = applyMiddleware(thunkMiddleware)(createInjectStore)(
+    store = createInjectStore(
       {
         [key]: {
-          test: reducer,
-          test2: reducer
+          test2: {
+            reducer
+          }
         }
       },
       {
         [key]: {
-          test: {
-            foo: 'bar'
-          },
           test2: {
-            bar: 'baz'
+            reducer: {
+              bar: 'baz'
+            }
           }
         }
       }
@@ -37,16 +35,19 @@ describe('ContextStoreProvider', () => {
   });
 
   it('should render its children', () => {
-    expect(shallow(
-      <ContextStoreProvider>
+    expect(
+      shallow(
+        <ContextStoreProvider>
+          <div>test</div>
+        </ContextStoreProvider>
+      ).contains(
         <div>test</div>
-      </ContextStoreProvider>
-    ).contains(
-      <div>test</div>)
+      )
     ).toBe(true)
   });
 
   it('should inject reducers into store', () => {
+
     shallow(
       <ContextStoreProvider
         name="test"
@@ -58,10 +59,12 @@ describe('ContextStoreProvider', () => {
     expect(store.getState()).toEqual({
       [key]: {
         test: {
-          foo: 'bar'
+          reducer: {}
         },
         test2: {
-          bar: 'baz'
+          reducer: {
+            bar: 'baz'
+          }
         }
       }
     })
@@ -75,7 +78,48 @@ describe('ContextStoreProvider', () => {
     );
 
     expect(store.getState()).toHaveProperty(key);
-    expect(Object.keys(store.getState()[key])[2]).toMatch(/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/)
+    expect(Object.keys(store.getState()[key])[1])
+    // UUID
+      .toMatch(/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/)
+  });
+
+  it('should be able to provide an existing context', () => {
+    shallow(
+      <ContextStoreProvider
+        name="test2"
+      />
+    );
+
+    expect(store.getState()).toHaveProperty(key);
+    expect(store.getState()).toEqual({
+      [key]: {
+        test2: {
+          reducer: {
+            bar: 'baz'
+          }
+        }
+      }
+    })
+  });
+
+  it('should be able to provide an existing context without overwriting existing reducers', () => {
+    shallow(
+      <ContextStoreProvider
+        name="test2"
+        reducers={ { reducer }}
+      />
+    );
+
+    expect(store.getState()).toHaveProperty(key);
+    expect(store.getState()).toEqual({
+      [key]: {
+        test2: {
+          reducer: {
+            bar: 'baz'
+          }
+        }
+      }
+    })
   });
 
   it('should not remove reducers on unmount', () => {
@@ -90,10 +134,12 @@ describe('ContextStoreProvider', () => {
     expect(store.getState()).toEqual({
       [key]: {
         test: {
-          foo: 'bar'
+          reducer: {}
         },
         test2: {
-          bar: 'baz'
+          reducer: {
+            bar: 'baz'
+          }
         }
       }
     });
@@ -103,10 +149,12 @@ describe('ContextStoreProvider', () => {
     expect(store.getState()).toEqual({
       [key]: {
         test: {
-          foo: 'bar'
+          reducer: {}
         },
         test2: {
-          bar: 'baz'
+          reducer: {
+            bar: 'baz'
+          }
         }
       }
     });
@@ -125,10 +173,12 @@ describe('ContextStoreProvider', () => {
     expect(store.getState()).toEqual({
       [key]: {
         test: {
-          foo: 'bar'
+          reducer: {}
         },
         test2: {
-          bar: 'baz'
+          reducer: {
+            bar: 'baz'
+          }
         }
       }
     });
@@ -138,7 +188,9 @@ describe('ContextStoreProvider', () => {
     expect(store.getState()).toEqual({
       [key]: {
         test2: {
-          bar: 'baz'
+          reducer: {
+            bar: 'baz'
+          }
         }
       }
     });
