@@ -1,5 +1,7 @@
 # redux-contexts
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/Vinnovera/redux-contexts.svg)](https://greenkeeper.io/)
+
 [![NPM Version](https://img.shields.io/npm/v/redux-contexts.svg?style=flat-square)](https://www.npmjs.com/package/multireducer)
 [![Build status](https://img.shields.io/travis/Vinnovera/redux-contexts/master.svg?style=flat-square)](https://travis-ci.org/Vinnovera/redux-contexts)
 [![Test coverage](https://img.shields.io/coveralls/Vinnovera/redux-contexts.svg)](https://coveralls.io/github/Vinnovera/redux-contexts)
