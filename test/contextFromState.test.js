@@ -8,6 +8,13 @@ describe('contextFromState', () => {
     }
   };
 
+  it('should return the state if root context is not found', () => {
+    const state = {
+      somethingelse: {}
+    };
+    expect(contextFromState(state, 'foo')).toEqual(state)
+  });
+
   it('should return the context state', () => {
     expect(contextFromState(state, 'foo')).toEqual({
       'bar': 'baz'
