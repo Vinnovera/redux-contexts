@@ -63,7 +63,7 @@
     "redux-thunk": "^2.2.0",
     "regenerator-runtime": "^0.11.0",
     "rimraf": "^2.6.2",
-    "webpack": "^3.7.1"
+    "webpack": "^4.41.0"
   },
   "peerDependencies": {
     "react": "^16.0.0",
